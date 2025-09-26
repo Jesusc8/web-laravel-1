@@ -1,7 +1,7 @@
 <nav class="flex items-center justify-between h-16">
     <div>
         <a href="{{ route('home') }}">
-            Logo
+            <x-forum.logo />
         </a>
     </div>
                 
