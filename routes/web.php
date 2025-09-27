@@ -10,6 +10,7 @@ use App\Http\Controllers\AnswerController;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('questions/{question}', [QuestionController::class, 'show'])->name('questions.show');
+Route::delete('questions/{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
 
 
 Route::post('/answers/{question}', [AnswerController::class, 'store'])->name('answers.store');
