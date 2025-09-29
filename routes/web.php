@@ -8,7 +8,20 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
 
+
+
+
 Route::get('/', [PageController::class, 'index'])->name('home');
+
+Route::get('questions', [QuestionController::class, 'index'])->name('questions.index');
+
+Route::get('questions/create', [QuestionController::class, 'create'])->name('questions.create'); //mostrar el diseno del formulario
+Route::post('questions', [QuestionController::class, 'store'])->name('questions.store'); //guardar la informacion del formulario en BD
+
+Route::get('questions/{question}/edit', [QuestionController::class, 'edit'])->name('questions.edit'); //Muestra el formulario
+Route::put('questions/{question}', [QuestionController::class, 'update'])->name('questions.update'); //Actualiza la informacion en BD
+
+
 Route::get('questions/{question}', [QuestionController::class, 'show'])->name('questions.show');
 Route::delete('questions/{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
 
