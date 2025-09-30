@@ -14,7 +14,7 @@ class AnswerController extends Controller
         ]);
 
         $question->answers()->create([
-            'user_id' => 20,
+            'user_id' => auth()->id(),
             'content' => $request->content,
         ]);
 

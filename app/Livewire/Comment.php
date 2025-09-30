@@ -19,7 +19,7 @@ class Comment extends Component
         ]);
 
         $this->commentable->comments()->create([
-            'user_id' => 20,
+            'user_id' => auth()->id(),
             'content' => $this->content,
         ]);
     }
