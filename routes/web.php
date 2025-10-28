@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
-
-
-
+use App\Http\Controllers\PostController;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
 
 Route::get('foro', [QuestionController::class, 'index'])->name('questions.index');
+Route::get('Blog', [PostController::class, 'index'])->name('posts.index');
+
 
 Route::get('foro/crear', [QuestionController::class, 'create'])->name('questions.create')->middleware('auth'); //mostrar el diseno del formulario
 Route::post('foro', [QuestionController::class, 'store'])->name('questions.store')->middleware('auth');; //guardar la informacion del formulario en BD
@@ -24,6 +24,9 @@ Route::put('foro/{question:slug}', [QuestionController::class, 'update'])->name(
 
 Route::get('foro/{question:slug}', [QuestionController::class, 'show'])->name('questions.show');
 Route::delete('questions/{question:slug}', [QuestionController::class, 'destroy'])->name('questions.destroy')->middleware('auth', 'can:delete,question');
+
+
+Route::get('blog/{post}', [PostController::class, 'show'])->name('posts.show');
 
 
 Route::post('/answers/{question}', [AnswerController::class, 'store'])->name('answers.store')->middleware('auth');;

@@ -100,5 +100,6 @@
             <p class="text-gray-500">
                 <a href="{{ route('login') }}" class="font-semibold hover:underline">Inicia sesión</a> para responder.
             </p>
+        @endauth
     </div>
 </x-forum.layouts.app>

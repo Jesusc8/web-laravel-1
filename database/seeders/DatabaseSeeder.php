@@ -54,9 +54,15 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-        Post::factory(20)->create([
+        $posts = Post::factory(20)->create([
             'user_id'     => fn() => User::inRandomOrder()->first()->id,
             'category_id' => fn() => $categories->random()->id, //consulta diferida
+        ]);
+
+        Comment::factory(50)->create([
+                'user_id'         => fn() => User::inRandomOrder()->first()->id,
+                'commentable_id'   => fn()=> $posts->random()->id,
+                'commentable_type' => Post::class,
         ]);
 
 
