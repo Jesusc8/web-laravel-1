@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\Question;
 use Illuminate\Http\Request;
 
@@ -13,11 +14,18 @@ class AnswerController extends Controller
             'content' => 'required|string|max:1900',
         ]);
 
-        $question->answers()->create([
-            'user_id' => auth()->id(),
-            'content' => $request->content,
-        ]);
+        if (isset($question)){
+
+            $question->answers()->create([
+                'user_id' => auth()->id(),
+                'content' => $request->content,
+            ]);
+
+        }
+
 
         return back();
     }
+
+    
 }

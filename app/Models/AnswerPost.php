@@ -6,16 +6,16 @@ use App\Traits\HasHeart;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class AnswerPost extends Model
 {
-    /** @use HasFactory<\Database\Factories\PostFactory> */
+    /** @use HasFactory<\Database\Factories\AnswerPostFactory> */
     use HasFactory, HasHeart;
 
+    protected $fillable = [
+        'user_id',
+        'content', 
+    ];
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
 
     public function user()
     {
@@ -26,13 +26,5 @@ class Post extends Model
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
-
-    public function answers()
-    {
-        return $this->hasMany(AnswerPost::class);
-    }
-
-
-
 
 }

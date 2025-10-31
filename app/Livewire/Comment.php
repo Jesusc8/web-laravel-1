@@ -22,6 +22,8 @@ class Comment extends Component
             'user_id' => auth()->id(),
             'content' => $this->content,
         ]);
+
+        $this->reset('content','showForm');
     }
 
 

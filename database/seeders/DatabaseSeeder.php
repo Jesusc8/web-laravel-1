@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Answer;
+use App\Models\AnswerPost;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Question;
@@ -32,10 +33,22 @@ class DatabaseSeeder extends Seeder
             'user_id'     => fn() => User::inRandomOrder()->first()->id,
             'category_id' => fn() => $categories->random()->id, //consulta diferida
         ]);
+        
+        $posts = Post::factory(20)->create([
+            'user_id'     => fn() => User::inRandomOrder()->first()->id,
+            'category_id' => fn() => $categories->random()->id, //consulta diferida
+        ]);
 
         $answers = Answer::factory(30)->create([
             'user_id'     => fn() => User::inRandomOrder()->first()->id,
             'question_id' => fn() => $questions->random()->id, //consulta diferida
+
+        ]);
+
+        $post_answers = AnswerPost::factory(30)->create([
+            'user_id'     => fn() => User::inRandomOrder()->first()->id,
+            'post_id'     => fn() => $posts->random()->id, //consulta diferida
+
         ]);
 
         //relacion polimorfica
@@ -54,14 +67,9 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-        $posts = Post::factory(20)->create([
-            'user_id'     => fn() => User::inRandomOrder()->first()->id,
-            'category_id' => fn() => $categories->random()->id, //consulta diferida
-        ]);
-
         Comment::factory(50)->create([
                 'user_id'         => fn() => User::inRandomOrder()->first()->id,
-                'commentable_id'   => fn()=> $posts->random()->id,
+                'commentable_id'   => fn()=> $post_answers->random()->id,
                 'commentable_type' => Post::class,
         ]);
 

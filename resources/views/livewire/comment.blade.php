@@ -1,7 +1,7 @@
 <div>
     <ul class="my-4 space-y-2">
     
-        @foreach ( $comments as $comment )
+        @foreach ($comments as $comment )
 
         <li class="flex items-center gap-2">
             <p class="text-xs bg-white/10 p-4 rounded-md">
@@ -30,7 +30,7 @@
             </a>
         </p>
         @else
-            <form wire:submit="add ">
+            <form wire:submit="add">
             <div class="flex gap-2">
                 <input type="text" wire:model= "content" class="w-full text-xs outline-none" placeholder="Escribe tu comentario aquí..." required autofocus>
 

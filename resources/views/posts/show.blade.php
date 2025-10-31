@@ -1,6 +1,8 @@
 <x-Blog.layout.app>
     <div class="flex items-center gap-2 w-full my-8">
-        {{-- <div>&hearts;</div> --}}
+
+        <livewire:heart :heartable='$post' />
+
 
         <div class="w-full">
             <h2 class="text-2xl font-bold md:text-3xl">
@@ -38,48 +40,53 @@
             {{ $post->description }}
         </p>
 
-        <ul class="space-y-4">
-        @foreach ($post->comments as $post)
-        <li>
-            <div class="flex items-start gap-2">
-                {{-- <div>&hearts;</div> --}}
+        <livewire:comment :commentable="$post" />
 
-                <div>
-                    <p class="text-sm text-gray-300">
-                        {{ $post->content }}
-                    </p>
-                    <p class="text-xs text-gray-500">
-                        {{ $post->user->name }} | 
-                        {{ $post->created_at->diffForHumans() }}
-                    </p>
-                    
-                    <!-- Comments -->
-                </div>
-            </div>  
-        </li>
-        @endforeach
-    </ul>     
+        <ul class="space-y-4">
+            @foreach ($post->answers as $answer)
+            <li>
+                <div class="flex items-start gap-2">
+                    {{-- <div>&hearts;</div> --}}
+
+                    <livewire:heart :heartable='$answer' />
+
+                    <div>
+                        <p class="text-sm text-gray-300">
+                            {{ $answer->content }}
+                        </p>
+                        <p class="text-xs text-gray-500">
+                            {{ $answer->user->name }} | 
+                            {{ $answer->created_at->diffForHumans() }}
+                        </p>
+                        
+                        <!-- Comments -->
+                    </div>
+                </div>  
+            </li>
+            @endforeach
+        </ul>     
     </div>
     
-    {{-- <ul class="space-y-4">
-        @foreach ($post->comments as $post)
-        <li>
-            <div class="flex items-start gap-2">
-                <div>&hearts;</div>
+        <div class="mt-8">
+        @auth
+            <h3 class="text-lg font-semibold mb-2">Tu Respuesta...</h3>
 
-                <div>
-                    <p class="text-sm text-gray-300">
-                        {{ $post->content }}
-                    </p>
-                    <p class="text-xs text-gray-500">
-                        {{ $post->user->name }} | 
-                        {{ $post->created_at->diffForHumans() }}
-                    </p>
-                    
-                    <!-- Comments -->
+            <form action=" {{ route('answerspost.store', $post) }}" method="POST">
+                @csrf
+
+                <div class="mb-2">
+                    <textarea name="content" rows="6" class="w-full p-2 border rounded-md text-xs" required></textarea>
+                    @error('content')<span class="block text-red-500 text-xs">{{ $message }}</span>@enderror
                 </div>
-            </div>  
-        </li>
-        @endforeach
-    </ul> --}}
+
+                <button type="submit" class="rounded-md bg-blue-600 hover:bg-blue-500 px-4 py-2 text-white cursor-pointer">
+                    Enviar Respuesta
+                </button>
+            </form>
+        @else
+            <p class="text-gray-500">
+                <a href="{{ route('login') }}" class="font-semibold hover:underline">Inicia sesión</a> para responder.
+            </p>
+        @endauth
+    </div>
 </x-Blog.layout.app>
