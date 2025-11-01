@@ -25,7 +25,7 @@ class Question extends Model
         return $this->hasMany(Answer::class);
     }
 
-    public function category()
+    public function category() 
     {
         return $this->belongsTo(Category::class);
     }
@@ -47,6 +47,7 @@ class Question extends Model
 
             $question->comments()->get()->each(function ($comment) {
                 $comment->hearts()->delete();
+
                 $comment->delete();
             });
 
@@ -55,6 +56,7 @@ class Question extends Model
 
                 $answer->comments()->get()->each(function ($comment) {
                     $comment->hearts()->delete();
+
                     $comment->delete();
                 });
 

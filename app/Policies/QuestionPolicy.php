@@ -7,7 +7,7 @@ use App\Models\User;
 
 class QuestionPolicy
 {
-    public function delete (User $user, Question $question)
+    public function delete(User $user, Question $question)
     {
         return $user->id === $question->user_id;
     }

@@ -18,19 +18,27 @@
                     {{ $post->created_at->diffForHumans() }}
                 </p>
 
-                <div class="flex items-center gap-2">
-                    <a href="#" class="text-xs font-semibold hover:underline">
-                        Edit
-                    </a>
-                    
-                    <form action="#" onsubmit="return confirm('¿Estás seguro de eliminar esta pregunta?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="rounded-md bg-red-600 hover:bg-red-500 px-2 py-1 text-xs font-semibold text-white cursor-pointer">
-                            Eliminar
-                        </button>
-                    </form>
-                </div>
+                @auth
+                    <div class="flex items-center gap-2">
+                        @can('update', $post)
+                        <a href="{{ route ('posts.edit', $post) }}" class="text-xs font-semibold hover:underline">
+                            Edit
+                        </a>
+                        @endcan
+
+                        @can('delete', $post)
+                            <form action="{{ route('posts.destroy', $post) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta pregunta?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="rounded-md bg-red-600 hover:bg-red-500 px-2 py-1 text-xs font-semibold text-white cursor-pointer">
+                                    Eliminar
+                                </button>
+                            </form>
+                        @endcan
+                        
+                    </div>
+                @endauth
+
             </div>
         </div>
     </div>
@@ -48,7 +56,7 @@
                 <div class="flex items-start gap-2">
                     {{-- <div>&hearts;</div> --}}
 
-                    <livewire:heart :heartable='$answer' />
+                    <livewire:heart :heartable='$answer' wire:key="answer-heart-{{ $answer->id }}"/>
 
                     <div>
                         <p class="text-sm text-gray-300">
@@ -59,7 +67,7 @@
                             {{ $answer->created_at->diffForHumans() }}
                         </p>
                         
-                        <!-- Comments -->
+                        <livewire:comment :commentable="$answer" wire:key="answer-comments-{{  $answer->id }}">
                     </div>
                 </div>  
             </li>
@@ -67,7 +75,7 @@
         </ul>     
     </div>
     
-        <div class="mt-8">
+    <div class="mt-8">
         @auth
             <h3 class="text-lg font-semibold mb-2">Tu Respuesta...</h3>
 
@@ -85,7 +93,7 @@
             </form>
         @else
             <p class="text-gray-500">
-                <a href="{{ route('login') }}" class="font-semibold hover:underline">Inicia sesión</a> para responder.
+                <a href="{{ route('login') }}" class="font-semibold hover:underline">Inicia sesión para responder.</a>
             </p>
         @endauth
     </div>
